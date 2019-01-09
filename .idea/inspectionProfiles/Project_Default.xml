@@ -1,0 +1,46 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyCompatibilityInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ourVersions">
+        <value>
+          <list size="4">
+            <item index="0" class="java.lang.String" itemvalue="2.7" />
+            <item index="1" class="java.lang.String" itemvalue="3.4" />
+            <item index="2" class="java.lang.String" itemvalue="3.5" />
+            <item index="3" class="java.lang.String" itemvalue="3.6" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="7">
+            <item index="0" class="java.lang.String" itemvalue="umsgpack" />
+            <item index="1" class="java.lang.String" itemvalue="zmq" />
+            <item index="2" class="java.lang.String" itemvalue="pytest" />
+            <item index="3" class="java.lang.String" itemvalue="simple-websocket-server" />
+            <item index="4" class="java.lang.String" itemvalue="pymata-aio" />
+            <item index="5" class="java.lang.String" itemvalue="aiohttp" />
+            <item index="6" class="java.lang.String" itemvalue="guizero" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="zmq.PUB" />
+          <option value="zmq.SUB" />
+          <option value="zmq.SUBSCRIBE" />
+          <option value="zmq.NOBLOCK" />
+          <option value="zmq.device" />
+          <option value="zmq.FORWARDER" />
+          <option value="guizero.Box.Box.pin_number" />
+          <option value="guizero.Box.Box.topic_filter" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

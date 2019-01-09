@@ -1,0 +1,24 @@
+#if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega328__)
+// uno
+
+#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+// megs
+
+#elif defined(__AVR_ATmega4809__)
+// uno wifi rev2
+
+#elif defined(__SAM3X8E__)
+// due
+
+#elif defined(ARDUINO_SAMD_MKR1000)
+mkr1000
+
+#elif defined(_VARIANT_ARDUINO_ZERO_)
+zero
+
+#elif defined(ARDUINO_PRIMO)
+primo
+
+#elif defined(_VARIANT_ARDUINO_101_X_)
+101
+
