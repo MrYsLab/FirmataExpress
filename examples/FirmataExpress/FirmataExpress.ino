@@ -40,7 +40,7 @@
 #include <avr/wdt.h>
 
 
-#define I_AM_HERE_ID                1
+#define ARDUINO_INSTANCE_ID         1
 
 #define I2C_WRITE                   B00000000
 #define I2C_READ                    B00001000
@@ -557,7 +557,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
     case RU_THERE:
         Firmata.write(START_SYSEX);
         Firmata.write((byte)I_AM_HERE);
-        Firmata.write((byte)I_AM_HERE_ID);
+        Firmata.write((byte)ARDUINO_INSTANCE_ID);
         Firmata.write(END_SYSEX);
       break ;
 
