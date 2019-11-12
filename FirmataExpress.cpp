@@ -92,7 +92,7 @@ FirmataClass::FirmataClass()
 {
   firmwareVersionCount = 0;
   firmwareVersionVector = 0;
-  blinkVersionDisabled = true;
+  blinkVersionDisabled = false;
 
   // Establish callback translation to parser callbacks
   parser.attach(ANALOG_MESSAGE, (FirmataParser::callbackFunction)staticAnalogCallback, (void *)NULL);
