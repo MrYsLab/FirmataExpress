@@ -2,7 +2,9 @@
   FirmataDefines.h
   Copyright (c) 2006-2008 Hans-Christoph Steiner.  All rights reserved.
   Copyright (C) 2009-2016 Jeff Hoefs.  All rights reserved.
-  Copyright (C) 2018-2019 Alan Yorinks. All Rights Reserved.
+  Copyright (C) 2018-2020 Alan Yorinks. All Rights Reserved.
+
+  DHT Humidity/Temperature Sensor Support based on work provided by Martyn Wheeler
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -250,7 +252,15 @@
 #endif
 #define SONAR_DATA              firmata::SONAR_DATA // sonar reply
 
+#ifdef DHT_CONFIG
+#undef DHT_CONFIG
+#endif
+#define DHT_CONFIG            firmata::DHT_CONFIG // sonar request
 
+#ifdef DHT_DATA
+#undef DHT_DATA
+#endif
+#define DHT_DATA              firmata::DHT_DATA // sonar reply
 // pin modes
 
 #ifdef PIN_MODE_INPUT
@@ -277,6 +287,11 @@
 #undef PIN_MODE_SERVO
 #endif
 #define PIN_MODE_SERVO          firmata::PIN_MODE_SERVO // digital pin in Servo output mode
+
+#ifdef PIN_MODE_DHT
+#undef PIN_MODE_DHT
+#endif
+#define PIN_MODE_DHT          firmata::PIN_MODE_DHT // digital pin in Servo output mode
 
 #ifdef PIN_MODE_SHIFT
 #undef PIN_MODE_SHIFT

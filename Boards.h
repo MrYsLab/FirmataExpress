@@ -2,7 +2,7 @@
   Boards.h - Hardware Abstraction Layer for Firmata library
   Copyright (c) 2006-2008 Hans-Christoph Steiner.  All rights reserved.
   Copyright (C) 2009-2017 Jeff Hoefs.  All rights reserved.
-  Copyright (C) 2018-2019 Alan Yorinks. All Rights Reserved.
+  Copyright (C) 2018-2020 Alan Yorinks. All Rights Reserved.
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -42,6 +42,9 @@
 #endif
 #ifndef MAX_SONARS
 #define MAX_SONARS 6
+#endif
+#ifndef MAX_DHTS
+#define MAX_DHTS 6
 #endif
 
 /*
@@ -171,12 +174,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SPI(p)           ((p) == SS || (p) == MOSI || (p) == MISO || (p) == SCK)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 #define ARDUINO_PINOUT_OPTIMIZE 1
 
 
@@ -191,12 +196,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SPI(p)           ((p) == SS || (p) == MOSI || (p) == MISO || (p) == SCK)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - FIRST_ANALOG_PIN)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // old Arduinos
@@ -211,12 +218,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_I2C(p)           ((p) == 18 || (p) == 19)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 #define ARDUINO_PINOUT_OPTIMIZE 1
 
 
@@ -240,12 +249,15 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) > 13 && (p) < 20)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 54)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // Arduino UNO WiFi rev2 (ATMega 4809)
 #elif defined(__AVR_ATmega4809__)
@@ -263,12 +275,15 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 0 || (p) == 1)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        (p) - 14
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // Arduino DUE
 #elif defined(__SAM3X8E__)
@@ -289,12 +304,15 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) > 13 && (p) < 20)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 54)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // Arduino/Genuino MKR1000
 #elif defined(ARDUINO_SAMD_MKR1000)
@@ -309,12 +327,15 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == PIN_SERIAL1_RX || (p) == PIN_SERIAL1_TX) //defined in variant.h  RX = 13, TX = 14
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 15)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p) // deprecated since v2.4
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 
 // Arduino Zero
@@ -335,6 +356,7 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SPI(p)           ((p) == SS || (p) == MOSI || (p) == MISO || (p) == SCK) // SS = A2
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define IS_PIN_SERIAL(p)        ((p) == 0 || (p) == 1)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
@@ -342,6 +364,8 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p) // deprecated since v2.4
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // Arduino Primo
 #elif defined(ARDUINO_PRIMO)
@@ -356,12 +380,15 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SPI(p)           ((p) == SS || (p)== MOSI || (p) == MISO || (p == SCK)) // 10, 11, 12, 13
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // Arduino 101
 #elif defined(_VARIANT_ARDUINO_101_X_)
@@ -379,12 +406,15 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 0 || (p) == 1)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p) // deprecated since v2.4
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // Teensy 1.0
 #elif defined(__AVR_AT90USB162__)
@@ -402,13 +432,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 2 || (p) == 3)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        (0)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
-
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // Teensy 2.0
 #elif defined(__AVR_ATmega32U4__) && defined(CORE_TEENSY)
@@ -426,6 +457,7 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 7 || (p) == 8)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        (((p)<22)?21-(p):11)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
@@ -452,6 +484,7 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_SERIAL6_TX          48
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) <= 63)
 #define IS_PIN_ANALOG(p)        (((p) >= 14 && (p) <= 23) || ((p) >= 31 && (p) <= 39) || ((p) >= 49 && (p) <= 50) || ((p) >= 64 && (p) <= 69))
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
@@ -486,12 +519,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        (((p) > 6 && (p) < 11) || ((p) == 0 || (p) == 1))
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        (((p)<=23)?(p)-14:(p)-24)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // Teensy-LC
 #elif defined(__MKL26Z64__)
@@ -512,12 +547,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        (((p) > 6 && (p) < 11) || ((p) == 0 || (p) == 1))
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // Teensy++ 1.0 and 2.0
 #elif defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__)
@@ -535,12 +572,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 2 || (p) == 3)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 38)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Leonardo
@@ -559,12 +598,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 0 || (p) == 1)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        (p) - 18
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Intel Galileo Board (gen 1 and 2) and Intel Edison
@@ -583,12 +624,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 0 || (p) == 1)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // RedBearLab BLE Nano with factory switch settings (S1 - S10)
 #elif defined(BLE_NANO)
@@ -602,12 +645,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SPI(p)           ((p) == CS || (p) == MOSI || (p) == MISO || (p) == SCK)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 8)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Sanguino
@@ -622,12 +667,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_I2C(p)           ((p) == 16 || (p) == 17)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 24)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // Sanguino/Melzi, e.g. Creality Ender-3
 #elif defined(__AVR_ATmega1284P__)
@@ -645,12 +692,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        ((p) == 8 || (p) == 9)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        (p) - 24
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Illuminato
@@ -665,12 +714,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_I2C(p)           ((p) == 4 || (p) == 5)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 36)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // Pic32 chipKIT FubarinoSD
 #elif defined(_BOARD_FUBARINO_SD_)
@@ -690,8 +741,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT FubarinoMini
@@ -713,8 +766,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT UNO32
@@ -735,8 +790,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT DP32
@@ -757,8 +814,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT uC32
@@ -779,8 +838,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT WF32
@@ -801,8 +862,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT WiFire
@@ -823,8 +886,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT MAX32
@@ -845,8 +910,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 
 // Pic32 chipKIT Pi
@@ -868,8 +935,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         (p)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // Pinoccio Scout
 // Note: digital pins 9-16 are usable but not labeled on the board numerically.
@@ -893,8 +962,10 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_SERVO(p)         ((p) - 2)
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // ESP8266
 // note: boot mode GPIOs 0, 2 and 15 can be used as outputs, GPIOs 6-11 are in use for flash IO
@@ -918,8 +989,11 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define DEFAULT_PWM_RESOLUTION  10
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // STM32 based boards
 #elif defined(ARDUINO_ARCH_STM32)
@@ -938,12 +1012,14 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERIAL(p)        (digitalPinHasSerial(p) && !pinIsSerial(p))
 #define IS_PIN_TONE(p)          IS_PIN_DIGITAL(p)    // any pin can be used for tone
 #define IS_PIN_SONAR(p)         ((p) >= 0 && (p) < MAX_SONARS)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_TONE(p)          PIN_TO_DIGITAL(p)
 #define PIN_TO_SONAR(p)         PIN_TO_DIGITAL(p)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        (p-A0)
 #define PIN_TO_PWM(p)           (p)
 #define PIN_TO_SERVO(p)         (p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 #define DEFAULT_PWM_RESOLUTION  PWM_RESOLUTION
 
 // Adafruit Bluefruit nRF52 boards
@@ -958,11 +1034,13 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_SERVO(p)         IS_PIN_DIGITAL(p)
 #define IS_PIN_I2C(p)           ((p) == PIN_WIRE_SDA || (p) == PIN_WIRE_SCL)
 #define IS_PIN_SPI(p)           ((p) == SS || (p)== MOSI || (p) == MISO || (p == SCK))
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ( ((p) == PIN_A0) ? 0 : ((p) == PIN_A1) ? 1 : ((p) == PIN_A2) ? 2 : ((p) == PIN_A3) ? 3 : \
                                   ((p) == PIN_A4) ? 4 : ((p) == PIN_A5) ? 5 : ((p) == PIN_A6) ? 6 : ((p) == PIN_A7) ? 7 : (127))
 #define PIN_TO_PWM(p)           (p)
 #define PIN_TO_SERVO(p)         (p)
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
 
 // Robo HAT MM1
 #elif defined(ROBOTICSMASTERS_ROBOHATMM1_M4)
@@ -979,10 +1057,13 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define IS_PIN_I2C(p)           ((p) == 21 || (p) == 22) // SDA = 21, SCL = 21
 #define IS_PIN_SPI(p)           ((p) == SS || (p) == MOSI || (p) == MISO || (p) == SCK) // SS = A2
 #define IS_PIN_SERIAL(p)        ((p) == 0 || (p) == 1)
+#define IS_PIN_DHT(p)           (IS_PIN_DIGITAL(p) && (p) - 2 < MAX_DHTS)
 #define PIN_TO_DIGITAL(p)       (p)
 #define PIN_TO_ANALOG(p)        ((p) - 14)
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p) // deprecated since v2.4
+#define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
+
 
 // anything else
 #else

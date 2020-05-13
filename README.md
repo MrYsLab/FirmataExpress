@@ -5,6 +5,7 @@ in conjunction with the Python based [pymata-express Firmata client](https://git
 It supports all the features of StandardFirmata2.5.8, and additionally adds support for
 
 * Stepper Motors
+* DHT Humidity/Temperature Sensors
 * HC-SR04 Distance Sensors
 * The Arduino Tone library
 * Advanced Auto-Discovery Of Connected Arduino Boards

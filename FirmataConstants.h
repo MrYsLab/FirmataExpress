@@ -2,7 +2,9 @@
   FirmataConstants.h
   Copyright (c) 2006-2008 Hans-Christoph Steiner.  All rights reserved.
   Copyright (C) 2009-2017 Jeff Hoefs.  All rights reserved.
-  Copyright (C) 2018-2019 Alan Yorinks. All Rights Reserved.
+  Copyright (C) 2018-2020 Alan Yorinks. All Rights Reserved.
+
+  DHT Humidity/Temperature Sensor Support based on work provided by Martyn Wheeler
 
 
   This program is free software; you can redistribute it and/or
@@ -69,6 +71,8 @@ static const int SERIAL_DATA =             0x60; // communicate with serial devi
 static const int ENCODER_DATA =            0x61; // reply with encoders current positions
 static const int SONAR_CONFIG =            0x62; // sonar configuration request
 static const int SONAR_DATA =              0x63; // sonar data reply
+static const int DHT_CONFIG =              0x64;
+static const int DHT_DATA =                0x65;
 static const int SERVO_CONFIG =            0x70; // set max angle, minPulse, maxPulse, freq
 static const int STRING_DATA =             0x71; // a string message with 14-bits per char
 static const int STEPPER_DATA =            0x72; // control a stepper motor
@@ -105,10 +109,11 @@ static const int PIN_MODE_SERIAL =         0x0A; // pin configured for serial co
 static const int PIN_MODE_PULLUP =         0x0B; // enable internal pull-up resistor for pin
 static const int PIN_MODE_SONAR =          0x0C; // pin configured for HC-SR04
 static const int PIN_MODE_TONE =           0x0D; // pin configured for tone
-static const int PIN_MODE_PIXY =           0x0E; // pin configure for pixy spi
+static const int PIN_MODE_PIXY =           0x0E; // pin configured for pixy spi
+static const int PIN_MODE_DHT =            0x0F; // pin configured for DHT
 static const int PIN_MODE_IGNORE =         0x7F; // pin configured to be ignored by digitalWrite and capabilityResponse
 
-static const int TOTAL_PIN_MODES =         16;
+static const int TOTAL_PIN_MODES =         17;
 
 } // namespace firmata
 
