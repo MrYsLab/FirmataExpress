@@ -31,9 +31,9 @@ namespace firmata {
  * The firmware version will not always equal the protocol version going forward.
  * Query using the REPORT_FIRMWARE message.
  */
-static const int FIRMWARE_MAJOR_VERSION =  2;
-static const int FIRMWARE_MINOR_VERSION =  5;
-static const int FIRMWARE_BUGFIX_VERSION = 7;
+static const int FIRMWARE_MAJOR_VERSION =  1;
+static const int FIRMWARE_MINOR_VERSION =  1;
+static const int FIRMWARE_BUGFIX_VERSION = 0;
 
 /* Version numbers for the protocol.  The protocol is still changing, so these
  * version numbers are important.

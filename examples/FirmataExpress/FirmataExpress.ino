@@ -39,7 +39,9 @@
 #include <FirmataExpress.h>
 #include <Ultrasonic.h>
 #include <Stepper.h>
+#if defined(__AVR__)
 #include <avr/wdt.h>
+#endif
 
 #define ARDUINO_INSTANCE_ID         1
 
@@ -61,8 +63,11 @@
 #define INTER_PING_INTERVAL 40 // 40 ms.
 
 // SYSEX command sub specifiers
+
+#if defined(__AVR__)
 #define TONE_TONE 0
 #define TONE_NO_TONE 1
+#endif
 
 #define STEPPER_CONFIGURE 0
 #define STEPPER_STEP 1
@@ -97,8 +102,10 @@ byte portConfigInputs[TOTAL_PORTS]; // each bit: 1 = pin in INPUT, 0 = anything 
 unsigned long currentMillis;        // store the current value from millis()
 unsigned long previousMillis;       // for comparison with currentMillis
 unsigned int samplingInterval = 19; // how often to run the main loop (in ms)
-unsigned long previousKeepAliveMillis = 0;
-unsigned int keepAliveInterval = 0;
+#if defined(__AVR__)
+  unsigned long previousKeepAliveMillis = 0;
+  unsigned int keepAliveInterval = 0;
+#endif
 
 /* i2c data */
 struct i2c_device_info {
@@ -429,9 +436,11 @@ void setPinModeCallback(byte pin, int mode)
       serialFeature.handlePinMode(pin, PIN_MODE_SERIAL);
 #endif
       break;
+#if defined(__AVR__)
     case PIN_MODE_TONE:
       Firmata.setPinMode(pin, PIN_MODE_TONE);
       break ;
+#endif
     case PIN_MODE_SONAR:
       Firmata.setPinMode(pin, PIN_MODE_SONAR);
       break ;
@@ -571,7 +580,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
   byte data;
   int slaveRegister;
   unsigned int delayTime;
-  byte pin ;// used for tone
+  byte pin ;
   int frequency ;
   int duration ;
 
@@ -709,10 +718,12 @@ void sysexCallback(byte command, byte argc, byte *argv)
         }
       }
       break;
+#if defined(__AVR__)
     case KEEP_ALIVE:
       keepAliveInterval = argv[0] + (argv[1] << 7);
       previousKeepAliveMillis = millis();
       break;
+#endif
     case SAMPLING_INTERVAL:
       if (argc > 1) {
         samplingInterval = argv[0] + (argv[1] << 7);
@@ -751,8 +762,10 @@ void sysexCallback(byte command, byte argc, byte *argv)
           Firmata.write(1);
           Firmata.write((byte)PIN_MODE_SONAR);
           Firmata.write(1);
+#if defined(__AVR__)
           Firmata.write((byte)PIN_MODE_TONE);
           Firmata.write(1);
+#endif
         }
         if (IS_PIN_ANALOG(pin)) {
           Firmata.write(PIN_MODE_ANALOG);
@@ -807,6 +820,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
 #endif
       break;
 
+#if defined(__AVR__)
     case TONE_DATA:
       byte toneCommand, pin;
       int frequency, duration;
@@ -824,7 +838,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
         noTone(pin);
       }
       break ;
-
+#endif
     // arg0 = trigger pin
     // arg1 = echo pin
     // arg2 = timeout_lsb
@@ -1004,9 +1018,11 @@ void systemResetCallback()
       // turns off pullup, configures everything
       setPinModeCallback(i, PIN_MODE_ANALOG);
     }
+#if defined(__AVR__)
     else if ( IS_PIN_TONE(i)) {
       noTone(i) ;
     }
+#endif
     else {
       // sets the output to 0, configures portConfigInputs
       setPinModeCallback(i, OUTPUT);
@@ -1147,8 +1163,8 @@ void loop()
         Firmata.write(current_pin) ;
         Firmata.write(current_type) ;
         for (uint8_t i = 0; i < sizeof(_bits) - 1; ++i) {
-          Firmata.write(_bits[i] & 0x7f);
-          Firmata.write(_bits[i] >> 7 & 0x7f);
+          Firmata.write(_bits[i] );
+         // Firmata.write(_bits[i] ;
         }
         Firmata.write(abs(rv));
         Firmata.write(0);
@@ -1172,6 +1188,7 @@ void loop()
       }
     }
 
+#if defined(__AVR__)
     if ( keepAliveInterval ) {
       currentMillis = millis();
       if (currentMillis - previousKeepAliveMillis > keepAliveInterval * 1000) {
@@ -1182,6 +1199,7 @@ void loop()
           ;
       }
     }
+#endif
   }
 
 #ifdef FIRMATA_SERIAL_FEATURE
