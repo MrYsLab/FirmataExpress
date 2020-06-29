@@ -15,6 +15,7 @@
   Copyright (C) 2018-2020 Alan Yorinks. All Rights Reserved.
 
   DHT Humidity/Temperature Sensor Support based on work provided by Martyn Wheeler
+  Based on the DHTNew library - https://github.com/RobTillaart/DHTNew
 
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE
@@ -191,9 +192,7 @@ uint8_t currentDHT = 0;            // Keeps track of which sensor is active.
 
 int dhtNumLoops = 0;
 int dhtLoopCounter = 0;
-//int ActiveDHT = 0 ; // number of DHT attached
-//uint8_t _pin;
-// uint8_t _wakeupDelay;
+
 uint8_t _bits[5];  // buffer to receive data
 
 /*==============================================================================
@@ -762,6 +761,9 @@ void sysexCallback(byte command, byte argc, byte *argv)
           Firmata.write(1);
           Firmata.write((byte)PIN_MODE_SONAR);
           Firmata.write(1);
+          Firmata.write((byte)PIN_MODE_DHT);
+          Firmata.write(1);
+
 #if defined(__AVR__)
           Firmata.write((byte)PIN_MODE_TONE);
           Firmata.write(1);
