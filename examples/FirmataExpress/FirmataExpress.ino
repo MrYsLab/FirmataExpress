@@ -182,7 +182,7 @@ byte sonarMSB, sonarLSB ;
 Stepper *stepper = NULL;
 
 // DHT sensors
-int numActiveDHTs = 0 ; // number of sonars attached
+int numActiveDHTs = 0 ; // number of DHTs attached
 uint8_t DHT_PinNumbers[MAX_DHTS] ;
 uint8_t DHT_WakeUpDelay[MAX_DHTS] ;
 uint8_t DHT_TYPE[MAX_DHTS] ;
