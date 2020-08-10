@@ -1044,13 +1044,13 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 
 // Robo HAT MM1
 #elif defined(ROBOTICSMASTERS_ROBOHATMM1_M4)
-#define TOTAL_ANALOG_PINS       7
-#define TOTAL_PINS              46 // 14 digital + 7 analog + 4 i2c + 6 spi + 4 serial
+#define TOTAL_ANALOG_PINS       4
+#define TOTAL_PINS              22 // 10 digital + 4 analog + 2 i2c + 6 spacer
 #define TOTAL_PORTS             3  // set when TOTAL_PINS > num digitial I/O pins
 #define VERSION_BLINK_PIN       LED_BUILTIN
 //#define PIN_SERIAL1_RX          0 // already defined in zero core variant.h
 //#define PIN_SERIAL1_TX          1 // already defined in zero core variant.h
-#define IS_PIN_DIGITAL(p)       ((p) >= 0 && (p) <= 13)
+#define IS_PIN_DIGITAL(p)       ((p) >= 2 && (p) < TOTAL_PINS)
 #define IS_PIN_ANALOG(p)        ((p) >= 14 && (p) < 14 + TOTAL_ANALOG_PINS)
 #define IS_PIN_PWM(p)           digitalPinHasPWM(p)
 #define IS_PIN_SERVO(p)         (IS_PIN_DIGITAL(p) && (p) < MAX_SERVOS) // deprecated since v2.4
@@ -1063,7 +1063,6 @@ writePort(port, value, bitmask):  Write an 8 bit port.
 #define PIN_TO_PWM(p)           PIN_TO_DIGITAL(p)
 #define PIN_TO_SERVO(p)         (p) // deprecated since v2.4
 #define PIN_TO_DHT(p)           PIN_TO_DIGITAL(p)
-
 
 // anything else
 #else
