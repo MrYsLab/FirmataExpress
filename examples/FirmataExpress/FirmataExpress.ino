@@ -1092,20 +1092,15 @@ void loop() {
                     f = modff(humidity, &i);
 
                     dht_value[0] = (uint8_t)i;
-                    //dht_value[1] = uint8_t(f * 10);
-                    dht_value[1] = (uint8_t)f;
+                    dht_value[1] = (uint8_t)(f*100);
 
 
                     float temperature = DHT.getTemperature();
 
                     f = modff(temperature, &i);
-                    //nearest = roundf(temperature * 100) / 100;
-                    //intpart = (uint8_t) nearest;
-                    //decpart = (uint8_t) ((nearest - intpart) * 100);
 
                     dht_value[2] = (uint8_t)i;
-                    //dht_value[1] = uint8_t(f * 10);
-                    dht_value[3] = (uint8_t)f;
+                    dht_value[3] = (uint8_t)(f*100);
                 }
 
                 // send the message back with an error status
