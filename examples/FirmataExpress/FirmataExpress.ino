@@ -107,7 +107,7 @@ unsigned long previousMillis;       // for comparison with currentMillis
 unsigned int samplingInterval = 19; // how often to run the main loop (in ms)
 #if defined(__AVR__)
 unsigned long previousKeepAliveMillis = 0;
-  unsigned int keepAliveInterval = 0;
+unsigned int keepAliveInterval = 0;
 #endif
 
 /* i2c data */
@@ -1017,7 +1017,8 @@ void setup() {
     // However do not do this if you are using SERIAL_MESSAGE
 
     Firmata.begin(115200);
-    while (!Serial) { ; // wait for serial port to connect. Needed for ATmega32u4-based boards and Arduino 101
+    while (!Serial) {
+        ; // wait for serial port to connect. Needed for ATmega32u4-based boards and Arduino 101
     }
 
     systemResetCallback();  // reset to default config
@@ -1068,6 +1069,7 @@ void loop() {
         if (dhtLoopCounter++ > dhtNumLoops) {
             if (numActiveDHTs) {
                 int rv;
+                float humidity, temperature;
 
                 uint8_t current_pin = DHT_PinNumbers[nextDHT];
                 uint8_t current_type = DHT_TYPE[nextDHT];
@@ -1088,19 +1090,19 @@ void loop() {
 
                 if (rv == DHTLIB_OK) {
                     float i, f;
-                    float humidity = DHT.getHumidity();
+                    humidity = DHT.getHumidity();
                     f = modff(humidity, &i);
 
                     dht_value[0] = (uint8_t)i;
-                    dht_value[1] = (uint8_t)(f*100);
+                    dht_value[1] = (uint8_t)(f * 100);
 
 
-                    float temperature = DHT.getTemperature();
+                    temperature = DHT.getTemperature();
 
                     f = modff(temperature, &i);
 
                     dht_value[2] = (uint8_t)i;
-                    dht_value[3] = (uint8_t)(f*100);
+                    dht_value[3] = (uint8_t)(f * 100);
                 }
 
                 // send the message back with an error status
@@ -1109,6 +1111,18 @@ void loop() {
                 Firmata.write(current_pin);
                 Firmata.write(current_type);
                 Firmata.write(abs(rv));
+                if (humidity >= 0.0) {
+                    Firmata.write(0);
+                }
+                else {
+                    Firmata.write(1);
+                }
+                if (temperature >= 0.0) {
+                    Firmata.write(0);
+                }
+                else {
+                    Firmata.write(1);
+                }
 
                 for (uint8_t i = 0; i < 4; ++i) {
                     Firmata.write(dht_value[i]);
